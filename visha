@@ -1,0 +1,39 @@
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { Button } from "@/components/ui/button";
+
+export default function ValentineProposal() {
+  const [noPosition, setNoPosition] = useState({ x: 0, y: 0 });
+  const [accepted, setAccepted] = useState(false);
+
+  const moveNoButton = () => {
+    const randomX = Math.floor(Math.random() * 200) - 100;
+    const randomY = Math.floor(Math.random() * 200) - 100;
+    setNoPosition({ x: randomX, y: randomY });
+  };
+
+  return (
+    <div className="flex flex-col items-center justify-center h-screen bg-pink-200 text-center p-4">
+      {!accepted ? (
+        <>
+          <h1 className="text-4xl font-bold text-red-600">Will you be my Valentine? 💖</h1>
+          <div className="flex gap-4 mt-6">
+            <Button className="bg-green-500 text-white text-lg px-6 py-3" onClick={() => setAccepted(true)}>
+              Yes! 💘
+            </Button>
+            <motion.div animate={noPosition} transition={{ type: "spring", stiffness: 300 }}>
+              <Button
+                className="bg-red-500 text-white text-lg px-6 py-3"
+                onMouseEnter={moveNoButton}
+              >
+                No 💔
+              </Button>
+            </motion.div>
+          </div>
+        </>
+      ) : (
+        <h1 className="text-4xl font-bold text-green-600">Yay! Can't wait for our date! 🥰</h1>
+      )}
+    </div>
+  );
+}
